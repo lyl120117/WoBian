@@ -198,6 +198,7 @@
     <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
     <uses-permission android:name="com.wepie.snake.qihoo.permission.MIPUSH_RECEIVE"/>
     <uses-permission android:name="com.subao.permission.USE_SDK.com.tencent.tmgp.sgame.KingsGlory"/>
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"/>
 
 
     <uses-feature android:name="android.hardware.camera" />

@@ -1,0 +1,11 @@
+/build
+/bin
+project/Test/ApiTest/bin/
+project/.idea/
+project/WoBian/bin/
+project/Libraries/Libraries-Plugin/bin/
+project/.gradle/
+*.iml
+project/bin/
+
+

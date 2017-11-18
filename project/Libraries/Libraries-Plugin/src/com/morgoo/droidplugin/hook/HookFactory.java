@@ -27,6 +27,7 @@ import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 
+import com.morgoo.droidplugin.hook.binder.IAlarmManagerBinderHook;
 import com.morgoo.droidplugin.hook.binder.IAppOpsServiceBinderHook;
 import com.morgoo.droidplugin.hook.binder.IAudioServiceBinderHook;
 import com.morgoo.droidplugin.hook.binder.IClipboardBinderHook;
@@ -48,6 +49,7 @@ import com.morgoo.droidplugin.hook.binder.ITelephonyBinderHook;
 import com.morgoo.droidplugin.hook.binder.ITelephonyRegistryBinderHook;
 import com.morgoo.droidplugin.hook.binder.IWifiManagerBinderHook;
 import com.morgoo.droidplugin.hook.binder.IWindowManagerBinderHook;
+import com.morgoo.droidplugin.hook.handle.IAlarmManagerHandle;
 import com.morgoo.droidplugin.hook.proxy.IActivityManagerHook;
 import com.morgoo.droidplugin.hook.proxy.IPackageManagerHook;
 import com.morgoo.droidplugin.hook.proxy.InstrumentationHook;
@@ -128,6 +130,7 @@ public class HookFactory {
         installHook(new INotificationManagerBinderHook(context), classLoader);
         installHook(new IMountServiceBinderHook(context), classLoader);
         installHook(new IAudioServiceBinderHook(context), classLoader);
+        installHook(new IAlarmManagerBinderHook(context), classLoader);
         installHook(new IContentServiceBinderHook(context), classLoader);
         installHook(new IWindowManagerBinderHook(context), classLoader);
         if (VERSION.SDK_INT > VERSION_CODES.LOLLIPOP_MR1) {
