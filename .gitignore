@@ -7,5 +7,5 @@ project/Libraries/Libraries-Plugin/bin/
 project/.gradle/
 *.iml
 project/bin/
-
+.idea/
 

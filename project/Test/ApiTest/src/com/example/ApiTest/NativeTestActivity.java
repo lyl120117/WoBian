@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.morgoo.nativec.NativeCHelper;
+import com.wobian.nativec.NativeCHelper;
 
 public class NativeTestActivity extends AppCompatActivity {
 

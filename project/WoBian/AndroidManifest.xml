@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.TestPlugin"
+          package="com.wobian"
           android:versionCode="1"
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="14"/>
-    <application android:name="com.morgoo.droidplugin.PluginApplication" android:label="@string/app_name"
+    <application android:name="com.wobian.droidplugin.PluginApplication" android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher" android:theme="@style/AppTheme">
         <activity
                 android:name="MyActivity"

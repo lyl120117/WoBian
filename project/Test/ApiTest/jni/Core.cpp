@@ -8,7 +8,7 @@
 #include "help/log.h"
 #include "HelperJni/HelperJni.h"
 
-#define NATIVE_CLASS "com/morgoo/nativec/NativeCHelper"
+#define NATIVE_CLASS "com/wobian/nativec/NativeCHelper"
 
 int registerNativeMethodsAndSetup(JNIEnv* env) {
 	jclass nativeClass = env->FindClass(NATIVE_CLASS);

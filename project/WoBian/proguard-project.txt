@@ -25,7 +25,7 @@
     public static void main(java.lang.String[]);
 }
 
--keepclasseswithmembers public class com.morgoo.hook.NativeHelper {
+-keepclasseswithmembers public class com.wobian.hook.NativeHelper {
       *** nativeHandleHookedMethod(...);
       *** nativeHa(...);
       *** nativeHb(...);
