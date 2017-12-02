@@ -426,6 +426,10 @@ public class PluginProcessManager {
                     try {
                         Method getService = serviceFetcher.getClass().getMethod("getService", baseContext.getClass());
                         getService.invoke(serviceFetcher, originContext);
+                        if("sensor".equals(key)){
+                            Log.w(TAG, "fakeSystemServiceInner  key="+key+", serviceFetcher="+serviceFetcher+", originContext="+originContext.getPackageName()+", "+getService.getName());
+                        }
+
                     } catch (InvocationTargetException e) {
                         Throwable cause = e.getCause();
                         if (cause != null) {
@@ -462,7 +466,7 @@ public class PluginProcessManager {
         if (VERSION.SDK_INT >= VERSION_CODES.ICE_CREAM_SANDWICH_MR1 && !TextUtils.equals(hostContext.getPackageName(), targetContext.getPackageName())) {
             long b = System.currentTimeMillis();
             fakeSystemServiceInner(hostContext, targetContext);
-            Log.i(TAG, "Fake SystemService for originContext=%s context=%s,cost %s ms", targetContext.getPackageName(), targetContext.getPackageName(), (System.currentTimeMillis() - b));
+            Log.i(TAG, "Fake SystemService for originContext=%s context=%s,cost %s ms", targetContext.getPackageName(), hostContext.getPackageName(), (System.currentTimeMillis() - b));
         }
     }
 

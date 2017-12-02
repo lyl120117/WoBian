@@ -62,6 +62,9 @@ public class Log {
     private static final File sDir = new File(Environment.getExternalStorageDirectory(), "360Log/Plugin/");
 
     static {
+        if(!sDir.exists()){
+            sDir.mkdirs();
+        }
         sFileLog = sDir.exists() && sDir.isDirectory();
         sDebug = sFileLog;
     }

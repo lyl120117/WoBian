@@ -66,13 +66,6 @@
       <sourceFolder url="file://$MODULE_DIR$/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
@@ -80,7 +73,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/annotations" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/shaders" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/attr" />
       <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/bundles" />
@@ -98,12 +97,11 @@
       <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/transforms" />
-      <excludeFolder url="file://$MODULE_DIR$/bin/intermediates/typedefs.txt" />
       <excludeFolder url="file://$MODULE_DIR$/bin/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/bin/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="__local_aars__:D.\InstalledApplication\MyApplication\project\WoBian\project\Libraries\Libraries-Plugin\lib\layoutlib.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="__local_aars__:E.\git\WoBian\project\Libraries\Libraries-Plugin\lib\layoutlib.jar:unspecified@jar" level="project" />
   </component>
 </module>

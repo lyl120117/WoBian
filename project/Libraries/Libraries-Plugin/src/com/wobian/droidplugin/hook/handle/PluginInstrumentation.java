@@ -45,6 +45,7 @@ import com.wobian.droidplugin.core.PluginProcessManager;
 import com.wobian.droidplugin.hook.HookFactory;
 import com.wobian.droidplugin.hook.binder.IWindowManagerBinderHook;
 import com.wobian.droidplugin.hook.proxy.IPackageManagerHook;
+import com.wobian.droidplugin.hook.proxy.ISensorManagerHook;
 import com.wobian.droidplugin.pm.PluginManager;
 import com.wobian.droidplugin.reflect.FieldUtils;
 import com.wobian.helper.Log;
@@ -79,6 +80,7 @@ public class PluginInstrumentation extends Instrumentation {
         if (enable) {
             IWindowManagerBinderHook.fixWindowManagerHook(activity);
             IPackageManagerHook.fixContextPackageManager(activity);
+            ISensorManagerHook.fixContextSensorManager(activity);
             try {
                 PluginProcessManager.fakeSystemService(mHostContext, activity);
             } catch (Exception e) {

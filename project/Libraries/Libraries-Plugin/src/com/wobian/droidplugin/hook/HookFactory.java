@@ -51,6 +51,7 @@ import com.wobian.droidplugin.hook.binder.IWifiManagerBinderHook;
 import com.wobian.droidplugin.hook.binder.IWindowManagerBinderHook;
 import com.wobian.droidplugin.hook.proxy.IActivityManagerHook;
 import com.wobian.droidplugin.hook.proxy.IPackageManagerHook;
+import com.wobian.droidplugin.hook.proxy.ISensorManagerHook;
 import com.wobian.droidplugin.hook.proxy.InstrumentationHook;
 import com.wobian.droidplugin.hook.proxy.LibCoreHook;
 import com.wobian.droidplugin.hook.proxy.PluginCallbackHook;
@@ -184,6 +185,7 @@ public class HookFactory {
         }
 
         installHook(new IPackageManagerHook(context), classLoader);
+        installHook(new ISensorManagerHook(context), classLoader);
         installHook(new IActivityManagerHook(context), classLoader);
         installHook(new PluginCallbackHook(context), classLoader);
         installHook(new InstrumentationHook(context), classLoader);
