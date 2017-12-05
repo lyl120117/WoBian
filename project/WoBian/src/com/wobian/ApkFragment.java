@@ -5,9 +5,12 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -15,6 +18,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +33,8 @@ import com.wobian.droidplugin.pm.PluginManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.wobian.helper.compat.PackageManagerCompat.*;
@@ -191,18 +197,18 @@ public class ApkFragment extends ListFragment implements ServiceConnection {
         new Thread("ApkScanner") {
             @Override
             public void run() {
-                File file = Environment.getExternalStorageDirectory();
 
-                List<File> apks = new ArrayList<File>(10);
-                File[] files = file.listFiles();
-                if (files != null) {
+                File file = Environment.getExternalStorageDirectory();
+//                List<File> apks = new ArrayList<File>(10);
+                List<File> apks = initApp();
+//                File[] files = file.listFiles();
+                /*if (files != null) {
                     for (File apk : files) {
                         if (apk.exists() && apk.getPath().toLowerCase().endsWith(".apk")) {
                             apks.add(apk);
                         }
                     }
                 }
-
 
                 file = new File(Environment.getExternalStorageDirectory(), "360Download");
                 if (file.exists() && file.isDirectory()) {
@@ -215,7 +221,7 @@ public class ApkFragment extends ListFragment implements ServiceConnection {
                         }
                     }
 
-                }
+                }*/
                 PackageManager pm = getActivity().getPackageManager();
                 for (final File apk : apks) {
                     try {
@@ -238,6 +244,41 @@ public class ApkFragment extends ListFragment implements ServiceConnection {
                 }
             }
         }.start();
+    }
+
+/* get non-system apps */
+    private ArrayList<File> initApp() {
+
+        final PackageManager pm = getActivity().getPackageManager();
+
+        // 获取android设备的应用列表
+        Intent intent = new Intent(Intent.ACTION_MAIN); // 动作匹配
+        intent.addCategory(Intent.CATEGORY_LAUNCHER); // 类别匹配
+        ArrayList<ResolveInfo> mApps = (ArrayList<ResolveInfo>) pm.queryIntentActivities(intent, 0);
+
+        // 排序
+        /*Collections.sort(mApps, new Comparator<ResolveInfo>() {
+
+            @Override
+            public int compare(ResolveInfo a, ResolveInfo b) {
+                // 排序规则
+                return String.CASE_INSENSITIVE_ORDER.compare(a.loadLabel(pm)
+                        .toString(), b.loadLabel(pm).toString()); // 忽略大小写
+            }
+        });*/
+
+        ArrayList<File> apkFile = new ArrayList<File>(mApps.size());
+        for (ResolveInfo rInfo : mApps)
+            try {
+                ApplicationInfo aInfo = pm.getApplicationInfo(rInfo.activityInfo.packageName, 0);
+                if (0 >= (aInfo.flags & ApplicationInfo.FLAG_SYSTEM)) {
+                    String dir = aInfo.sourceDir;
+                    apkFile.add(new File(dir));
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        return apkFile;
     }
 
     @Override
