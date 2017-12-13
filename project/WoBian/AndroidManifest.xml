@@ -19,6 +19,6 @@
         </activity>
 
         <service android:name=".PingAnJinGuanJiaService"/>
-
+        <service android:name=".JinguanjaFloatWindowService"/>
     </application>
 </manifest>

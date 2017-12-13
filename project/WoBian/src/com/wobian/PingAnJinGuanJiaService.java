@@ -48,26 +48,23 @@ public class PingAnJinGuanJiaService extends Service {
         AndFixManager afm = new AndFixManager(this);
 
         mUtils = new Utils();
-//        testFix();
+        testFix();
 //        mWm = (WindowManager) MyServiceManager.getOriginService(Context.WINDOW_SERVICE);
         Log.d(TAG, "onCreate      add=");
-//        Log.d(TAG, "onCreate      add="+mUtils.add(5, 10));
-//        createToucher();
+        Log.d(TAG, "onCreate      add="+mUtils.sub(5, 10));
+        createToucher();
     }
 
     private void testFix(){
         try {
             Method origin = mUtils.getClass().getDeclaredMethod("add",new Class[]{int.class, int.class} );
-            Method method = this.getClass().getDeclaredMethod("add", new Class[]{int.class, int.class});
+            Method method = mUtils.getClass().getDeclaredMethod("sub", new Class[]{int.class, int.class});
             AndFix.addReplaceMethod(origin, method);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public int add(int a, int b){
-        return a - b;
-    }
 
     private void createToucher() {
         //赋值WindowManager&LayoutParam.
@@ -96,7 +93,7 @@ public class PingAnJinGuanJiaService extends Service {
         //获取浮动窗口视图所在布局.
         mToucherLayout = (FrameLayout) inflater.inflate(R.layout.toucherlayout, null);
         //添加toucherlayout
-        mToucherLayout.addView(mToucherLayout, mParams);
+        mWm.addView(mToucherLayout, mParams);
 
 
 //        mToucherLayout.getMeasuredWidth();

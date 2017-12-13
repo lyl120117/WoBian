@@ -25,6 +25,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wobian.droidplugin"
     android:versionCode="1"
     android:versionName="1.0">
@@ -201,7 +202,7 @@
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"/>
     <uses-permission android:name="oem.permission.SENDMAIL"/>
     <uses-permission android:name="com.pingan.lifeinsurance.permission.RPC"/>
-
+    <uses-permission android:name="android.permission.INJECT_EVENTS" tools:ignore="ProtectedPermissions" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature

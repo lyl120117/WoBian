@@ -25,7 +25,7 @@ public class MyActivity extends AppCompatActivity {
 
 
     private static final String TAG = "MyActivity";
-
+    private UtilSingle uSingle;
     {
         //System.loadLibrary("daclient");
     }
@@ -64,8 +64,21 @@ public class MyActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mFragmentStatePagerAdapter);
         Log.d(TAG, "onCreate   ");
-        startService(new Intent(this, PingAnJinGuanJiaService.class));
+        //startService(new Intent(this, PingAnJinGuanJiaService.class));
 //        getPerms();
+        uSingle = UtilSingle.getInstance(getBaseContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uSingle.startFloatWindowService(getPackageName());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        uSingle.stopFloatWindowService();
     }
 
     @Override

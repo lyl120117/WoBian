@@ -23,7 +23,10 @@
 package com.wobian.droidplugin.hook.proxy;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -53,9 +56,21 @@ import java.util.List;
 public class ISensorManagerHook extends ProxyHook {
 
     private static final String TAG = ISensorManagerHook.class.getSimpleName();
-
     public ISensorManagerHook(Context hostContext) {
         super(hostContext);
+        final Context receContext =  hostContext;
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.wobian.startstep");
+        hostContext.registerReceiver(new BroadcastReceiver(){
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String Action = intent.getAction();
+                if ("com.wobian.startstep".equals(Action)){
+                    fixSensorManager(receContext);
+                }
+            }
+        }, filter);
     }
 
     @Override
