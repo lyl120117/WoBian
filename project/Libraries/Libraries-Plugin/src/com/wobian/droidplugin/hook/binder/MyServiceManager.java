@@ -36,7 +36,7 @@ public class MyServiceManager {
     private static Map<String, IBinder> mProxiedServiceCache = new HashMap<String, IBinder>(1);
     private static Map<String, Object> mProxiedObjCache = new HashMap<String, Object>(1);
 
-    static IBinder getOriginService(String serviceName) {
+    public static IBinder getOriginService(String serviceName) {
         return mOriginServiceCache.get(serviceName);
     }
 

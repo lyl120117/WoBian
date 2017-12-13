@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/Test/Test.iml" filepath="$PROJECT_DIR$/Test/Test.iml" />
       <module fileurl="file://E:\git\WoBian\project\WoBian\TestPlugin.iml" filepath="E:\git\WoBian\project\WoBian\TestPlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/WoBian/WoBian.iml" filepath="$PROJECT_DIR$/WoBian/WoBian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/andFixDemo/andFixDemo.iml" filepath="$PROJECT_DIR$/andFixDemo/andFixDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zhook/zhook.iml" filepath="$PROJECT_DIR$/zhook/zhook.iml" />
     </modules>
   </component>
 </project>

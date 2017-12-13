@@ -1,5 +1,6 @@
 package com.wobian;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -62,6 +63,8 @@ public class MyActivity extends AppCompatActivity {
         setContentView(R.layout.main);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mFragmentStatePagerAdapter);
+        Log.d(TAG, "onCreate   ");
+        startService(new Intent(this, PingAnJinGuanJiaService.class));
 //        getPerms();
     }
 

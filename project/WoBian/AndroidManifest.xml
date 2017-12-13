@@ -18,5 +18,7 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".PingAnJinGuanJiaService"/>
+
     </application>
 </manifest>

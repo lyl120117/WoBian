@@ -1,14 +1,14 @@
 <component name="libraryTable">
   <library name="com.android.support:gridlayout-v7-23.1.1">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/gridlayout-v7-23.1.1.aar/e5a793fa4dba4bc1f6f2954b6910b77e/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/gridlayout-v7-23.1.1.aar/e5a793fa4dba4bc1f6f2954b6910b77e/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/gridlayout-v7-23.1.1.aar/e829162b59444e90757a37f953feff4f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/gridlayout-v7-23.1.1.aar/e829162b59444e90757a37f953feff4f/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/../../../../android-sdk/extras/android/m2repository/com/android/support/gridlayout-v7/23.1.1/gridlayout-v7-23.1.1-javadoc.jar!/" />
+      <root url="jar://E:/../android-sdk/extras/android/m2repository/com/android/support/gridlayout-v7/23.1.1/gridlayout-v7-23.1.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../../../android-sdk/extras/android/m2repository/com/android/support/gridlayout-v7/23.1.1/gridlayout-v7-23.1.1-sources.jar!/" />
+      <root url="jar://E:/../android-sdk/extras/android/m2repository/com/android/support/gridlayout-v7/23.1.1/gridlayout-v7-23.1.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

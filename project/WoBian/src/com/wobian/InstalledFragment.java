@@ -51,6 +51,8 @@ public class InstalledFragment extends ListFragment implements ServiceConnection
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Log.d("DEBUG_SK", "onListItemClick   "+intent);
             startActivity(intent);
+            if("com.pingan.lifeinsurance".equals(item.packageInfo.packageName)){
+            }
         } else if (v.getId() == R.id.button3) {
             doUninstall(item);
         }
