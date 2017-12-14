@@ -112,6 +112,7 @@ public class ISensorManagerHook extends ProxyHook {
             Log.d(TAG, "MySensorListener  invoke   method="+method.getName());
             return null;
         }
+        public Handler mHandler = new Handler();
         public static volatile float stepCount=1;
         public static volatile float tmpstepCount = 0;
         public static volatile float realyCount = 0;
@@ -136,7 +137,13 @@ public class ISensorManagerHook extends ProxyHook {
                                 }else{
                                     st.accuracy =3;
                                 }
-                                mListener.onSensorChanged(st);
+                                mHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mListener.onSensorChanged(st);
+                                    }
+                                });
+//                                mListener.onSensorChanged(st);
                                 Thread.sleep(300);
                                 tmpstepCount=tmpstepCount+2;
                             }

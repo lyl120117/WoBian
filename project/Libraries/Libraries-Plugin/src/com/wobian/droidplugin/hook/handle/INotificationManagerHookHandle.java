@@ -523,6 +523,10 @@ public class INotificationManagerHookHandle extends BaseHookHandle {
         @Override
         protected boolean beforeInvoke(Object receiver, Method method, Object[] args) throws Throwable {
             final int index = 0;
+            Log.v(TAG, "arg=" + args + "\n" + "method=" + method.getName());
+            for (Object arg : args){
+                Log.v(TAG, "arg=" + arg + "\n");
+            }
             if (args != null && args.length > index && args[index] instanceof String) {
                 String pkg = (String) args[index];
                 if (!TextUtils.equals(pkg, mHostContext.getPackageName())) {

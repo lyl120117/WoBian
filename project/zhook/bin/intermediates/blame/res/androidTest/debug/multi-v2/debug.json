@@ -1,25 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\git\\WoBian\\project\\zhook\\bin\\intermediates\\res\\merged\\androidTest\\debug\\values_values.arsc.flat",
+            "outputFile": "E:\\github\\WoBian\\project\\zhook\\bin\\intermediates\\res\\merged\\androidTest\\debug\\values_values.arsc.flat",
             "map": [
                 {
-                    "source": "E:\\git\\WoBian\\project\\zhook\\bin\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "42",
-                        "endOffsets": "93"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "D:\\InstalledApplication\\MyApplication\\project\\WoBian\\project\\zhook\\bin\\intermediates\\res\\merged\\androidTest\\debug\\values_values.arsc.flat",
-            "map": [
-                {
-                    "source": "D:\\InstalledApplication\\MyApplication\\project\\WoBian\\project\\zhook\\bin\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "source": "E:\\github\\WoBian\\project\\zhook\\bin\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

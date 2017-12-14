@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\git\\WoBian\\project\\andFixDemo\\bin\\intermediates\\res\\merged\\androidTest\\debug\\values_values.arsc.flat",
+            "outputFile": "E:\\github\\WoBian\\project\\andFixDemo\\bin\\intermediates\\res\\merged\\androidTest\\debug\\values_values.arsc.flat",
             "map": [
                 {
-                    "source": "E:\\git\\WoBian\\project\\zhook\\bin\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "source": "E:\\github\\WoBian\\project\\zhook\\bin\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

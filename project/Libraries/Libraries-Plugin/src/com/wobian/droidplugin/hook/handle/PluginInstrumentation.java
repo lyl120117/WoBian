@@ -36,9 +36,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.text.TextUtils;
 
+import com.wobian.droidplugin.MyCrashHandler;
 import com.wobian.droidplugin.am.RunningActivities;
 import com.wobian.droidplugin.core.Env;
 import com.wobian.droidplugin.core.PluginProcessManager;
@@ -249,8 +251,16 @@ public class PluginInstrumentation extends Instrumentation {
         }
     }
 
+    private Handler mHandler = new Handler();
     @Override
     public void callApplicationOnCreate(Application app) {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                Thread.setDefaultUncaughtExceptionHandler(null);
+                Thread.setDefaultUncaughtExceptionHandler(MyCrashHandler.getInstance());
+            }
+        }, 1000);
         if (enable) {
             IPackageManagerHook.fixContextPackageManager(app);
             try {

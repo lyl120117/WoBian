@@ -24,6 +24,7 @@ package com.wobian.droidplugin.hook.binder;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.wobian.droidplugin.hook.Hook;
 import com.wobian.droidplugin.hook.HookedMethodHandler;
@@ -55,8 +56,10 @@ abstract class BinderHook extends Hook implements InvocationHandler {
             }
             HookedMethodHandler hookedMethodHandler = mHookHandles.getHookedMethodHandler(method);
             if (hookedMethodHandler != null) {
+//                Log.v("BinderHook", "method=" + method.getName());
                 return hookedMethodHandler.doHookInner(mOldObj, method, args);
             } else {
+//                Log.v("BinderHook", "else method=" + method.getName());
                 return method.invoke(mOldObj, args);
             }
         } catch (InvocationTargetException e) {

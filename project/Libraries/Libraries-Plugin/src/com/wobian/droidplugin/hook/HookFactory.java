@@ -127,7 +127,7 @@ public class HookFactory {
         //for ISearchManager
         installHook(new ISearchManagerBinderHook(context), classLoader);
         //for INotificationManager
-        installHook(new INotificationManagerBinderHook(context), classLoader);
+//        installHook(new INotificationManagerBinderHook(context), classLoader);
         installHook(new IMountServiceBinderHook(context), classLoader);
         installHook(new IAudioServiceBinderHook(context), classLoader);
         installHook(new IAlarmManagerBinderHook(context), classLoader);

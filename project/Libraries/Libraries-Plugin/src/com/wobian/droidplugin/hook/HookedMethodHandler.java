@@ -45,7 +45,14 @@ public class HookedMethodHandler {
         try {
             mUseFakedResult = false;
             mFakedResult = null;
+//            if ("getPackageUid".equals(method.getName()) || "queryLocalInterface".equals(method.getName())){
+//
+//            } else  {
+//                  Log.v(TAG, "receiver=" + receiver.getClass().getSimpleName() + "method=" + method.getName(), new RuntimeException("here").fillInStackTrace());
+//            }
+
             boolean suc = beforeInvoke(receiver, method, args);
+//            Log.v(TAG, "beforeInvoke return " + suc);
             Object invokeResult = null;
             if (!suc) {
                 invokeResult = method.invoke(receiver, args);
