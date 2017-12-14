@@ -1,4 +1,4 @@
-package com.wobian;
+package com.wobian.service;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.app.Service;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.wobian.util.CommandExecution;
+import com.wobian.R;
 
 /**
  * Created by zhuhaifeng on 2017/12/13.
@@ -61,7 +65,7 @@ public class JinguanjaFloatWindowService extends Service{
     private boolean  currentOri = true;
     private boolean  lastMoveState=false;
     private LinearLayout mFloatLayout;
-    private Button mFloatView,startStep;
+    private Button mFloatView,startStep,stopStep;
     private EditText mText;
 
     public void CreateInputWindow(){
@@ -91,7 +95,11 @@ public class JinguanjaFloatWindowService extends Service{
         mWindowManager.addView(mFloatLayout, wmParams);
         mFloatView = (Button)mFloatLayout.findViewById(R.id.float_id);
         startStep =  (Button)mFloatLayout.findViewById(R.id.startstep);
+        stopStep = (Button)mFloatLayout.findViewById(R.id.stopstep);
         mFloatView.setText("发送");
+        mFloatView.setOnClickListener(listener);
+        startStep.setOnClickListener(listener);
+        stopStep.setOnClickListener(listener);
         mText =(EditText)mFloatLayout.findViewById(R.id.float_edit);
         mFloatView.setOnTouchListener(new View.OnTouchListener()
         {
@@ -149,37 +157,6 @@ public class JinguanjaFloatWindowService extends Service{
                 return false;
             }
         });
-
-        mFloatView.setOnClickListener(new View.OnClickListener()
-        {
-
-            @Override
-            public void onClick(View v)
-            {
-                Log.d(TAG, "click floatView");
-                if (lastMoveState) {
-                    lastMoveState =false;
-                }else {
-//                    dismissFloatView();
-                    String pinganText=mText.getText().toString();
-                    StringBuffer commandSb= new StringBuffer();
-                    commandSb.append("input text ");
-                    commandSb.append(pinganText);
-                    CommandExecution.execCommand(commandSb.toString(),false);
-                    Toast.makeText(getBaseContext(),pinganText,Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-        });
-        startStep.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Intent mIntent = new Intent("com.wobian.startstep");
-                sendBroadcast(mIntent);
-            }
-        });
         mText.setOnTouchListener(new View.OnTouchListener(){
 
             @Override
@@ -198,8 +175,48 @@ public class JinguanjaFloatWindowService extends Service{
                 return false;
             }
         });
+        mFloatLayout.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(event.getKeyCode()==KeyEvent.KEYCODE_BACK){
+                    updateWindowFocus(false);
+                }
+                return false;
+            }
+        });
     }
 
+    public View.OnClickListener listener = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId()==R.id.float_id){
+                Log.d(TAG, "click floatView");
+                if (lastMoveState) {
+                    lastMoveState =false;
+                }else {
+//                    dismissFloatView();
+                    String pinganText=mText.getText().toString();
+                    StringBuffer commandSb= new StringBuffer();
+                    commandSb.append("input text ");
+                    commandSb.append(pinganText);
+                    CommandExecution.execCommand(commandSb.toString(),false);
+                    Toast.makeText(getBaseContext(),pinganText,Toast.LENGTH_SHORT).show();
+
+                }
+            }else if(v.getId()==R.id.startstep){
+                Intent mIntent = new Intent("com.wobian.server.STARTSTEP");
+                sendBroadcast(mIntent);
+                stopStep.setVisibility(View.VISIBLE);
+                startStep.setVisibility(View.GONE);
+            }else if(v.getId()==R.id.stopstep){
+                Intent mintent = new Intent("com.wobian.server.STOPSTEP");
+                sendBroadcast(mintent);
+                stopStep.setVisibility(View.GONE);
+                startStep.setVisibility(View.VISIBLE);
+            }
+        }
+    };
     private void updateViewPosition() {
         //update floatwindow oriation params
         wmParams.x = (int) (x - mTouchX);

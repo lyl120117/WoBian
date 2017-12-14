@@ -1,4 +1,4 @@
-package com.wobian;
+package com.wobian.ui;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -18,7 +18,6 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,18 +28,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wobian.R;
 import com.wobian.droidplugin.pm.PluginManager;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.wobian.helper.compat.PackageManagerCompat.*;
 
 public class ApkFragment extends ListFragment implements ServiceConnection {
-    private ArrayAdapter<com.wobian.ApkItem> adapter;
+    private ArrayAdapter<ApkItem> adapter;
     final Handler handler = new Handler();
 
     public ApkFragment() {

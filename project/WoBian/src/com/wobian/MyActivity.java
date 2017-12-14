@@ -1,6 +1,5 @@
 package com.wobian;
 
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -13,6 +12,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.wobian.helper.Log;
+import com.wobian.ui.ApkFragment;
+import com.wobian.ui.InstalledFragment;
+import com.wobian.util.UtilSingle;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -72,13 +74,12 @@ public class MyActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        uSingle.startFloatWindowService(getPackageName());
+        uSingle.stopFloatWindowService();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        uSingle.stopFloatWindowService();
     }
 
     @Override

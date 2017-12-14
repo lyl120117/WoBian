@@ -1,4 +1,4 @@
-package com.wobian;
+package com.wobian.service;
 
 import android.app.Service;
 import android.content.Context;
@@ -7,13 +7,13 @@ import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.alipay.euler.andfix.AndFix;
-import com.wobian.droidplugin.hook.binder.MyServiceManager;
+import com.wobian.R;
 import com.wobian.helper.Log;
+import com.wobian.util.Util;
 import com.wobian.zhook.AndFixManager;
 
 import java.lang.reflect.Method;
@@ -30,7 +30,7 @@ public class PingAnJinGuanJiaService extends Service {
     private int mScreenWidth, mScreenHeight;
 
 
-    private Utils mUtils;
+    private Util mUtils;
 
     //状态栏高度.
     private int mStatusBarHeight = -1;
@@ -47,7 +47,7 @@ public class PingAnJinGuanJiaService extends Service {
         Log.d(TAG, "onCreate   mWm="+mWm);
         AndFixManager afm = new AndFixManager(this);
 
-        mUtils = new Utils();
+        mUtils = new Util();
         testFix();
 //        mWm = (WindowManager) MyServiceManager.getOriginService(Context.WINDOW_SERVICE);
         Log.d(TAG, "onCreate      add=");

@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".PingAnJinGuanJiaService"/>
-        <service android:name=".JinguanjaFloatWindowService"/>
+        <service android:name=".service.PingAnJinGuanJiaService"/>
+        <service android:name=".service.JinguanjaFloatWindowService"/>
     </application>
 </manifest>

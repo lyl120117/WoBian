@@ -1,4 +1,4 @@
-package com.wobian;
+package com.wobian.util;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

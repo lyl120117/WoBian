@@ -1,4 +1,4 @@
-package com.wobian;
+package com.wobian.util;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.wobian.service.JinguanjaFloatWindowService;
 
 public class UtilSingle {
     private String TAG="wobian_UtilSingle";

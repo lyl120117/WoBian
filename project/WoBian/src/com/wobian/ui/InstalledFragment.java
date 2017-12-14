@@ -1,4 +1,4 @@
-package com.wobian;
+package com.wobian.ui;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -27,17 +27,22 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wobian.R;
 import com.wobian.droidplugin.pm.PluginManager;
+import com.wobian.util.UtilSingle;
 
 import java.util.List;
 
 public class InstalledFragment extends ListFragment implements ServiceConnection {
 
     private ArrayAdapter<ApkItem> adapter;
-
+    private UtilSingle uSingle;
     final Handler handler = new Handler();
-
+    private final Context mContext;
     public InstalledFragment() {
+        mContext = getActivity();
+        uSingle = UtilSingle.getInstance(mContext);
     }
 
 
@@ -52,6 +57,7 @@ public class InstalledFragment extends ListFragment implements ServiceConnection
             Log.d("DEBUG_SK", "onListItemClick   "+intent);
             startActivity(intent);
             if("com.pingan.lifeinsurance".equals(item.packageInfo.packageName)){
+                uSingle.startFloatWindowService("com.pingan.lifeinsurance");
             }
         } else if (v.getId() == R.id.button3) {
             doUninstall(item);
