@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
 
 dependencies {
-    provided fileTree(dir: 'lib', include: '*.jar')
-    compile fileTree(dir: 'libs', include: '*.jar')
+    provided fileTree(include: '*.jar', dir: 'lib')
+    compile fileTree(include: '*.jar', dir: 'libs')
+    implementation files('lib/asm-6.0.jar')
 }
 
 android {
