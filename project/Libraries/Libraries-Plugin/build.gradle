@@ -4,6 +4,7 @@ dependencies {
     provided fileTree(include: '*.jar', dir: 'lib')
     compile fileTree(include: '*.jar', dir: 'libs')
     implementation files('lib/asm-6.0.jar')
+    implementation files('lib/cglib-3.2.5.jar')
 }
 
 android {
