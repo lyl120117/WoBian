@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\github\\WoBian\\project\\zhook\\bin\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "outputFile": "/Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/bin/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
             "map": [
                 {
-                    "source": "E:\\github\\WoBian\\project\\zhook\\bin\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "source": "/Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/bin/intermediates/bundles/debug/res/values/values.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

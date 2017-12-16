@@ -1,16 +1,16 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\github\\WoBian\\project\\andFixDemo\\bin\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "/Users/liyangliu/Downloads/wobian/git/WoBian/project/andFixDemo/bin/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
-                    "source": "E:\\github\\WoBian\\project\\andFixDemo\\src\\main\\res\\values\\strings.xml",
+                    "source": "/Users/liyangliu/Downloads/wobian/git/WoBian/project/andFixDemo/src/main/res/values/strings.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
-                        "startOffsets": "19",
+                        "startOffsets": "17",
                         "endColumns": "47",
-                        "endOffsets": "62"
+                        "endOffsets": "60"
                     },
                     "to": {
                         "startLines": "2",

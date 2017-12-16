@@ -1,11 +1,11 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\github\WoBian\project\zhook\src\main\AndroidManifest.xml:1:1-2:34
-INJECTED from E:\github\WoBian\project\zhook\src\main\AndroidManifest.xml:1:1-2:34
-INJECTED from E:\github\WoBian\project\zhook\src\main\AndroidManifest.xml:1:1-2:34
+ADDED from /Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/src/main/AndroidManifest.xml:1:1-2:34
+INJECTED from /Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/src/main/AndroidManifest.xml:1:1-2:34
+INJECTED from /Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/src/main/AndroidManifest.xml:1:1-2:34
 	package
-		ADDED from E:\github\WoBian\project\zhook\src\main\AndroidManifest.xml:2:5-31
-		INJECTED from E:\github\WoBian\project\zhook\src\main\AndroidManifest.xml
-		INJECTED from E:\github\WoBian\project\zhook\src\main\AndroidManifest.xml
+		ADDED from /Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/src/main/AndroidManifest.xml:2:5-31
+		INJECTED from /Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/src/main/AndroidManifest.xml
+		INJECTED from /Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from E:\github\WoBian\project\zhook\src\main\AndroidManifest.xml:1:11-69
+		ADDED from /Users/liyangliu/Downloads/wobian/git/WoBian/project/zhook/src/main/AndroidManifest.xml:1:11-69

@@ -10,13 +10,12 @@ import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.alipay.euler.andfix.AndFix;
+import com.mdit.library.proxy.Enhancer;
+import com.mdit.library.proxy.MethodInterceptor;
+import com.mdit.library.proxy.MethodProxy;
 import com.wobian.R;
 import com.wobian.helper.Log;
 import com.wobian.util.Util;
-import com.wobian.zhook.AndFixManager;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by liyangliu on 2017/12/4.
@@ -45,25 +44,46 @@ public class PingAnJinGuanJiaService extends Service {
         super.onCreate();
         mWm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         Log.d(TAG, "onCreate   mWm="+mWm);
-        AndFixManager afm = new AndFixManager(this);
+//        AndFixManager afm = new AndFixManager(this);
 
         mUtils = new Util();
-        testFix();
+        testCg();
+//        testFix();
 //        mWm = (WindowManager) MyServiceManager.getOriginService(Context.WINDOW_SERVICE);
         Log.d(TAG, "onCreate      add=");
-        Log.d(TAG, "onCreate      add="+mUtils.sub(5, 10));
+        Log.d(TAG, "onCreate      sub="+mUtils.sub(5, 10));
         createToucher();
     }
 
-    private void testFix(){
-        try {
-            Method origin = mUtils.getClass().getDeclaredMethod("add",new Class[]{int.class, int.class} );
-            Method method = mUtils.getClass().getDeclaredMethod("sub", new Class[]{int.class, int.class});
-            AndFix.addReplaceMethod(origin, method);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void testCg(){
+
+        Enhancer enhancer = new Enhancer(this);
+        enhancer.setSuperclass(Util.class);
+        enhancer.setCallback(new MethodInterceptor() {
+            @Override
+            public Object intercept(Object object, Object[] args, MethodProxy methodProxy) throws Exception {
+                android.util.Log.e(TAG,"intercept  -- before---");
+                Object obj = methodProxy.invokeSuper(object, args);
+
+                android.util.Log.e(TAG,"intercept  -- after---");
+                return obj;
+            }
+        });
+        mUtils = (Util) enhancer.create();
     }
+
+
+
+//    private void testFix(){
+//        try {
+//            Method origin = mUtils.getClass().getDeclaredMethod("add",new Class[]{int.class, int.class} );
+//            Method method = mUtils.getClass().getDeclaredMethod("sub", new Class[]{int.class, int.class});
+//            AndFix.addReplaceMethod(origin, method);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
 
 
     private void createToucher() {

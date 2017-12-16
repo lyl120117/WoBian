@@ -19,4 +19,8 @@
 #   public *;
 #}
 
+#第三方类库
+-libraryjars lib/asm-6.0.jar
+-libraryjars lib/cglib-3.2.5.jar
+
 

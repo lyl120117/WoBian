@@ -7,7 +7,7 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':Libraries:Libraries-Plugin')
-    implementation project(':zhook')
+    implementation project(':cglibrary')
 }
 
 
@@ -63,7 +63,7 @@ android {
     defaultConfig{
 
         ndk {
-            abiFilters "armeabi"
+            abiFilters "armeabi","armeabi-v7a","mips","x86"
         }
     }
 }

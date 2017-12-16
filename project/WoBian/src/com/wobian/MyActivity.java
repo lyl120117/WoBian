@@ -1,5 +1,6 @@
 package com.wobian;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.wobian.helper.Log;
+import com.wobian.service.PingAnJinGuanJiaService;
 import com.wobian.ui.ApkFragment;
 import com.wobian.ui.InstalledFragment;
 import com.wobian.util.UtilSingle;
@@ -66,7 +68,7 @@ public class MyActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mFragmentStatePagerAdapter);
         Log.d(TAG, "onCreate   ");
-        //startService(new Intent(this, PingAnJinGuanJiaService.class));
+        startService(new Intent(this, PingAnJinGuanJiaService.class));
 //        getPerms();
         uSingle = UtilSingle.getInstance(getBaseContext());
     }
