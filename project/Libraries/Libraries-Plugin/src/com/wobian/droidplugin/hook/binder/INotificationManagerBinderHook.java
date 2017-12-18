@@ -24,9 +24,14 @@ package com.wobian.droidplugin.hook.binder;
 
 import android.content.Context;
 import android.os.IBinder;
+
 import com.wobian.droidplugin.hook.BaseHookHandle;
 import com.wobian.droidplugin.hook.handle.INotificationManagerHookHandle;
+import com.wobian.droidplugin.reflect.FieldUtils;
+import com.wobian.helper.Log;
 import com.wobian.helper.compat.INotificationManagerCompat;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by Andy Zhang(zhangyong232@gmail.com) on 2015/3/2.
@@ -51,6 +56,23 @@ public class INotificationManagerBinderHook extends BinderHook {
 
     public String getServiceName() {
         return SERVICE_NAME;
+    }
+
+    public static void fixedNotificationManager(Object notificationManager){
+        try {
+            Object proxy = INotificationManagerCompat.asInterface(MyServiceManager.getOriginService(SERVICE_NAME));
+            Log.w("INotificationManagerHookHandle", "fixedInputMethod    proxy="+proxy);
+            FieldUtils.writeField(notificationManager, "sService", proxy, true);
+            Log.w("INotificationManagerHookHandle", "fixedInputMethod    writeField    proxy="+proxy);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

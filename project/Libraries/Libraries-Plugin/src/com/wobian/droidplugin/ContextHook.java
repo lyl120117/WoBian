@@ -28,7 +28,7 @@ import android.os.UserHandle;
 import android.view.Display;
 
 import com.wobian.droidplugin.hook.binder.IInputMethodManagerBinderHook;
-import com.wobian.droidplugin.hook.binder.MyServiceManager;
+import com.wobian.droidplugin.hook.binder.INotificationManagerBinderHook;
 import com.wobian.droidplugin.reflect.MethodUtils;
 import com.wobian.helper.Log;
 
@@ -50,6 +50,28 @@ public class ContextHook extends Context {
     private Context origin;
     public ContextHook(Context context){
         origin = context;
+    }
+
+
+    @Override
+    public Object getSystemService(String name) {
+        Log.d(TAG, "getSystemService    name="+name);
+
+        Object originObj = origin.getSystemService(name);
+        if(mFixedApps.contains(name)){
+            if(IInputMethodManagerBinderHook.SERVICE_NAME.equals(name)){
+                IInputMethodManagerBinderHook.fixedInputMethod(originObj);
+            }else if(INotificationManagerBinderHook.SERVICE_NAME.equals(name)){
+                INotificationManagerBinderHook.fixedNotificationManager(originObj);
+            }
+        }
+        return originObj;
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public String getSystemServiceName(Class<?> serviceClass) {
+        return origin.getSystemServiceName(serviceClass);
     }
 
     public String getBasePackageName(){
@@ -90,6 +112,21 @@ public class ContextHook extends Context {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public Intent registerReceiverAsUser(BroadcastReceiver receiver, UserHandle user,
+             IntentFilter filter, String broadcastPermission, Handler scheduler) {
+        try {
+            return (Intent) MethodUtils.invokeMethod(origin, "registerReceiverAsUser", receiver
+                , user, filter, broadcastPermission, scheduler);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -509,24 +546,6 @@ public class ContextHook extends Context {
             add(IInputMethodManagerBinderHook.SERVICE_NAME);
         }
     };
-    @Override
-    public Object getSystemService(String name) {
-        Log.d(TAG, "getSystemService    name="+name);
-
-        Object originObj = origin.getSystemService(name);
-        if(mFixedApps.contains(name)){
-            if(IInputMethodManagerBinderHook.SERVICE_NAME.equals(name)){
-                IInputMethodManagerBinderHook.fixedInputMethod(originObj);
-            }
-        }
-        return originObj;
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public String getSystemServiceName(Class<?> serviceClass) {
-        return origin.getSystemServiceName(serviceClass);
-    }
 
     @Override
     public int checkPermission(String permission, int pid, int uid) {
