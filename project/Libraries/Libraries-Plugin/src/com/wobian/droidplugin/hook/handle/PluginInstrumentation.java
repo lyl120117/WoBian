@@ -40,6 +40,7 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.text.TextUtils;
 
+import com.wobian.droidplugin.ContextHook;
 import com.wobian.droidplugin.MyCrashHandler;
 import com.wobian.droidplugin.am.RunningActivities;
 import com.wobian.droidplugin.core.Env;
@@ -83,6 +84,8 @@ public class PluginInstrumentation extends Instrumentation {
             IWindowManagerBinderHook.fixWindowManagerHook(activity);
             IPackageManagerHook.fixContextPackageManager(activity);
             ISensorManagerHook.fixContextSensorManager(activity);
+            ContextHook.fixNotificationManager(activity);
+            activity.getSystemService(Context.NOTIFICATION_SERVICE);
             try {
                 PluginProcessManager.fakeSystemService(mHostContext, activity);
             } catch (Exception e) {
@@ -263,6 +266,9 @@ public class PluginInstrumentation extends Instrumentation {
         }, 1000);
         if (enable) {
             IPackageManagerHook.fixContextPackageManager(app);
+            ContextHook.fixNotificationManager(app);
+//            ISensorManagerHook.fixContextSensorManager(app);
+            app.getSystemService(Context.NOTIFICATION_SERVICE);
             try {
                 PluginProcessManager.fakeSystemService(mHostContext, app);
             } catch (Exception e) {

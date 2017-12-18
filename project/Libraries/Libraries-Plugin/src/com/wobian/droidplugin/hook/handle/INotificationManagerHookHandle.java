@@ -148,40 +148,6 @@ public class INotificationManagerHookHandle extends BaseHookHandle {
     }
 
 
-    public static void fixNotificationManager(Activity context){
-        Log.d(TAG, "fixNotificationManager  "+context+", "+context.getPackageName());
-
-        try {
-            final Context origin = context.getBaseContext();
-            Object newProxy;
-//            Class cls = Class.forName("android.content.Context");
-//            Enhancer enhancer = new Enhancer(context);
-//
-//            enhancer.setSuperclass(cls);
-//            enhancer.setCallback(new MethodInterceptor() {
-//                @Override
-//                public Object intercept(Object object, Object[] args, MethodProxy methodProxy) throws Exception {
-//                    android.util.Log.e(TAG,"intercept  -- before--- "+methodProxy.getMethodName());
-//                    Object obj = methodProxy.invokeSuper(origin, args);
-//
-//                    android.util.Log.e(TAG,"intercept  -- after--- "+methodProxy.getMethodName());
-//                    return obj;
-//                }
-//            });
-//            newProxy =  enhancer.create();
-            newProxy = new ContextHook(origin);
-            Log.d(TAG, "fixNotificationManager  newProxy="+newProxy);
-            FieldUtils.writeField(context, "mBase", newProxy, true);
-            Log.d(TAG, "fixNotificationManager writeField  newProxy="+newProxy);
-        }
-//        catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private class MyNotification extends HookedMethodHandler {
         public MyNotification(Context context) {

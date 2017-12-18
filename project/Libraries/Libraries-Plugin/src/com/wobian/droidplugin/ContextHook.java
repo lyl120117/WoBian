@@ -1,10 +1,12 @@
 package com.wobian.droidplugin;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
@@ -29,6 +31,7 @@ import android.view.Display;
 
 import com.wobian.droidplugin.hook.binder.IInputMethodManagerBinderHook;
 import com.wobian.droidplugin.hook.binder.INotificationManagerBinderHook;
+import com.wobian.droidplugin.reflect.FieldUtils;
 import com.wobian.droidplugin.reflect.MethodUtils;
 import com.wobian.helper.Log;
 
@@ -52,7 +55,44 @@ public class ContextHook extends Context {
         origin = context;
     }
 
+    public Context getOrigin(){
+        return origin;
+    }
 
+    public static void fixNotificationManager(ContextWrapper context){
+        Log.d(TAG, "fixNotificationManager  "+context+", "+context.getPackageName());
+
+        try {
+            final Context origin = context.getBaseContext();
+            Object newProxy;
+//            Class cls = Class.forName("android.content.Context");
+//            Enhancer enhancer = new Enhancer(context);
+//
+//            enhancer.setSuperclass(cls);
+//            enhancer.setCallback(new MethodInterceptor() {
+//                @Override
+//                public Object intercept(Object object, Object[] args, MethodProxy methodProxy) throws Exception {
+//                    android.util.Log.e(TAG,"intercept  -- before--- "+methodProxy.getMethodName());
+//                    Object obj = methodProxy.invokeSuper(origin, args);
+//
+//                    android.util.Log.e(TAG,"intercept  -- after--- "+methodProxy.getMethodName());
+//                    return obj;
+//                }
+//            });
+//            newProxy =  enhancer.create();
+            newProxy = new ContextHook(origin);
+            Log.d(TAG, "fixNotificationManager  newProxy="+newProxy);
+            FieldUtils.writeField(context, "mBase", newProxy, true);
+            Log.d(TAG, "fixNotificationManager writeField  newProxy="+newProxy);
+        }
+//        catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+    }
     @Override
     public Object getSystemService(String name) {
         Log.d(TAG, "getSystemService    name="+name);

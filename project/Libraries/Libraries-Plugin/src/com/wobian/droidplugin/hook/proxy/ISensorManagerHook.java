@@ -25,6 +25,7 @@ package com.wobian.droidplugin.hook.proxy;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Sensor;
@@ -35,6 +36,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.wobian.droidplugin.hook.BaseHookHandle;
+import com.wobian.droidplugin.hook.handle.INotificationManagerHookHandle;
 import com.wobian.droidplugin.hook.handle.ISensorManagerHookHandle;
 import com.wobian.droidplugin.reflect.FieldUtils;
 import com.wobian.droidplugin.reflect.Utils;
@@ -228,9 +230,8 @@ public class ISensorManagerHook extends ProxyHook {
             fixSensorManager(context);
         }
     };
-    public static void fixContextSensorManager(Activity context){
+    public static void fixContextSensorManager(ContextWrapper context){
         Log.d(TAG, "ISensorManagerHook  fixContextSensorManager   context="+context.getBaseContext());
-//        INotificationManagerHookHandle.fixNotificationManager(context);
         Message m = Message.obtain();
         m.obj = context.getBaseContext();
         mHandler.sendMessageDelayed(m, 5000);

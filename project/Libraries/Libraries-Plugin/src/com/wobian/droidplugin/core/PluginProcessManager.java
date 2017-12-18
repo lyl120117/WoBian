@@ -43,6 +43,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.wobian.droidplugin.ContextHook;
 import com.wobian.droidplugin.hook.HookFactory;
 import com.wobian.droidplugin.pm.PluginManager;
 import com.wobian.droidplugin.reflect.FieldUtils;
@@ -376,6 +377,10 @@ public class PluginProcessManager {
     private static void fakeSystemServiceInner(Context hostContext, Context targetContext) {
         try {
             Context baseContext = getBaseContext(targetContext);
+            if(baseContext instanceof ContextHook){
+                ContextHook contextHook = (ContextHook) baseContext;
+                baseContext = contextHook.getOrigin();
+            }
             if (mFakedContext.containsValue(baseContext)) {
                 return;
             } else if (mServiceCache != null) {
@@ -411,6 +416,10 @@ public class PluginProcessManager {
                 //如没有，则创建一个新的。
                 Map<?, ?> sSYSTEM_SERVICE_MAP = (Map<?, ?>) SYSTEM_SERVICE_MAP;
                 Context originContext = getBaseContext(hostContext);
+                if(originContext instanceof ContextHook){
+                    ContextHook contextHook = (ContextHook) originContext;
+                    originContext = contextHook.getOrigin();
+                }
 
                 Object mServiceCache = FieldUtils.readField(originContext, "mServiceCache");
                 if (mServiceCache instanceof List) {
