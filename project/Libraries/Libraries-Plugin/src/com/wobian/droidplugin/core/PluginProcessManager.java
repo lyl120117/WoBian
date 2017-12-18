@@ -350,7 +350,7 @@ public class PluginProcessManager {
 
     static {
         sSkipService.add(Context.LAYOUT_INFLATER_SERVICE);
-        sSkipService.add(Context.NOTIFICATION_SERVICE);
+        //sSkipService.add(Context.NOTIFICATION_SERVICE);
         sSkipService.add("storage");
         sSkipService.add("accessibility");
         sSkipService.add("audio");

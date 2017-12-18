@@ -106,7 +106,7 @@ public class ISensorManagerHook extends ProxyHook {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            Log.d(TAG, "zhf dispatchSensorEvent tmpstepCount:"+tmpstepCount+" stepCount:"+stepCount+" t.accuracy:"+event.accuracy+""+event.values[0]);
+            Log.d(TAG, "zhf dispatchSensorEvent tmpstepCount:"+tmpstepCount+" stepCount:"+stepCount+" t.accuracy:"+event.accuracy+" step:"+event.values[0]);
             if(event.sensor.getType() == Sensor.TYPE_STEP_COUNTER){
                 Log.d(TAG, "myThread id null:"+(myThread == null)+" stepflag:"+ stepflag);
                 if(myThread == null && !stepflag){
@@ -157,9 +157,9 @@ public class ISensorManagerHook extends ProxyHook {
                                     mMainHandler.post(new Runnable() {
                                         @Override
                                         public void run() {
-                                      mListener.onSensorChanged(st);
+                                           mListener.onSensorChanged(st);
                                         }
-                                    });
+                                      });
 //                                    Thread.sleep(300);
 //                                    tmpstepCount=tmpstepCount+2;
                                     Thread.sleep(1000);

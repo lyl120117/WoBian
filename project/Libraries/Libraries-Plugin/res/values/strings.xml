@@ -23,8 +23,8 @@
 **/
 -->
 <resources>
-    <string name="stub_name_activity">启动插件ing...</string>
-    <string name="stub_name_povider">插件代理服务</string>
-    <string name="stub_name_service">插件代理服务</string>
-    <string name="service_name_plugin_manager_service">插件管理服务</string>
+    <string name="stub_name_activity">启动ing...</string>
+    <string name="stub_name_povider">我变代理服务</string>
+    <string name="stub_name_service">我变代理服务</string>
+    <string name="service_name_plugin_manager_service">我变我变管理服务</string>
 </resources>
