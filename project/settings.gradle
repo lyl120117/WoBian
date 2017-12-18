@@ -1,4 +1,4 @@
-include ':Libraries:Libraries-Plugin', ':zhook', ':cglibrary'
+include ':Libraries:Libraries-Plugin', ':zhook', ':cglibrary', ':mydemo'
 include ':WoBian'
 include ':Test:ApiTest'
 rootProject.name = 'DroidPlugin'

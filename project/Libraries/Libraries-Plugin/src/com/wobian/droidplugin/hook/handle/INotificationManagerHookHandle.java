@@ -22,6 +22,7 @@
 
 package com.wobian.droidplugin.hook.handle;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
@@ -39,6 +40,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.wobian.droidplugin.ContextHook;
 import com.wobian.droidplugin.core.PluginProcessManager;
 import com.wobian.droidplugin.hook.BaseHookHandle;
 import com.wobian.droidplugin.hook.HookedMethodHandler;
@@ -143,6 +145,42 @@ public class INotificationManagerHookHandle extends BaseHookHandle {
             }
         }
         return -1;
+    }
+
+
+    public static void fixNotificationManager(Activity context){
+        Log.d(TAG, "fixNotificationManager  "+context+", "+context.getPackageName());
+
+        try {
+            final Context origin = context.getBaseContext();
+            Object newProxy;
+//            Class cls = Class.forName("android.content.Context");
+//            Enhancer enhancer = new Enhancer(context);
+//
+//            enhancer.setSuperclass(cls);
+//            enhancer.setCallback(new MethodInterceptor() {
+//                @Override
+//                public Object intercept(Object object, Object[] args, MethodProxy methodProxy) throws Exception {
+//                    android.util.Log.e(TAG,"intercept  -- before--- "+methodProxy.getMethodName());
+//                    Object obj = methodProxy.invokeSuper(origin, args);
+//
+//                    android.util.Log.e(TAG,"intercept  -- after--- "+methodProxy.getMethodName());
+//                    return obj;
+//                }
+//            });
+//            newProxy =  enhancer.create();
+            newProxy = new ContextHook(origin);
+            Log.d(TAG, "fixNotificationManager  newProxy="+newProxy);
+            FieldUtils.writeField(context, "mBase", newProxy, true);
+            Log.d(TAG, "fixNotificationManager writeField  newProxy="+newProxy);
+        }
+//        catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private class MyNotification extends HookedMethodHandler {

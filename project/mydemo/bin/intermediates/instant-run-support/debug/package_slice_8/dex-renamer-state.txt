@@ -1,0 +1,4 @@
+#Sun Dec 17 20:39:40 CST 2017
+base.0=/Users/liyangliu/Downloads/wobian/git/WoBian/project/mydemo/bin/intermediates/transforms/dexMerger/debug/8
+path.0=classes.dex
+renamed.0=classes.dex

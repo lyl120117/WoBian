@@ -29,14 +29,17 @@ import android.view.inputmethod.InputMethodManager;
 import com.wobian.droidplugin.hook.BaseHookHandle;
 import com.wobian.droidplugin.hook.handle.IInputMethodManagerHookHandle;
 import com.wobian.droidplugin.reflect.FieldUtils;
+import com.wobian.helper.Log;
 import com.wobian.helper.compat.IInputMethodManagerCompat;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by Andy Zhang(zhangyong232@gmail.com) on 2015/6/4.
  */
 public class IInputMethodManagerBinderHook extends BinderHook {
 
-    private final static String SERVICE_NAME = Context.INPUT_METHOD_SERVICE;
+    public final static String SERVICE_NAME = Context.INPUT_METHOD_SERVICE;
 
     public IInputMethodManagerBinderHook(Context hostContext) {
         super(hostContext);
@@ -66,5 +69,22 @@ public class IInputMethodManagerBinderHook extends BinderHook {
     @Override
     protected BaseHookHandle createHookHandle() {
         return new IInputMethodManagerHookHandle(mHostContext);
+    }
+
+    public static void fixedInputMethod(Object inputMethodManager){
+        try {
+            Object proxy = IInputMethodManagerCompat.asInterface(MyServiceManager.getOriginService(SERVICE_NAME));
+            Log.w("IInputMethodManagerHookHandle", "fixedInputMethod    proxy="+proxy);
+            FieldUtils.writeField(inputMethodManager, "mService", proxy, true);
+            Log.w("IInputMethodManagerHookHandle", "fixedInputMethod    writeField    proxy="+proxy);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

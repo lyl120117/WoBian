@@ -28,6 +28,7 @@ import android.view.inputmethod.EditorInfo;
 
 import com.wobian.droidplugin.hook.BaseHookHandle;
 import com.wobian.droidplugin.hook.HookedMethodHandler;
+import com.wobian.helper.Log;
 
 import java.lang.reflect.Method;
 
@@ -35,6 +36,7 @@ import java.lang.reflect.Method;
  * Created by Andy Zhang(zhangyong232@gmail.com) on 2015/6/4.
  */
 public class IInputMethodManagerHookHandle extends BaseHookHandle {
+    public static final String TAG = IInputMethodManagerHookHandle.class.getSimpleName();
 
     public IInputMethodManagerHookHandle(Context hostContext) {
         super(hostContext);
@@ -44,6 +46,7 @@ public class IInputMethodManagerHookHandle extends BaseHookHandle {
     protected void init() {
         sHookedMethodHandlers.put("startInput", new startInput(mHostContext));
         sHookedMethodHandlers.put("windowGainedFocus", new windowGainedFocus(mHostContext));
+        sHookedMethodHandlers.put("startInputOrWindowGainedFocus", new startInputOrWindowGainedFocus(mHostContext));
     }
 
     private class IInputMethodManagerHookedMethodHandler extends HookedMethodHandler {
@@ -53,6 +56,7 @@ public class IInputMethodManagerHookHandle extends BaseHookHandle {
 
         @Override
         protected boolean beforeInvoke(Object receiver, Method method, Object[] args) throws Throwable {
+            Log.d(TAG, "beforeInvoke    "+method.getName());
             if (args != null && args.length > 0) {
                 for (Object arg : args) {
                     if (arg instanceof EditorInfo) {
@@ -75,6 +79,13 @@ public class IInputMethodManagerHookHandle extends BaseHookHandle {
 
     private class windowGainedFocus extends IInputMethodManagerHookedMethodHandler {
         public windowGainedFocus(Context hostContext) {
+            super(hostContext);
+        }
+    }
+
+
+    private class startInputOrWindowGainedFocus extends IInputMethodManagerHookedMethodHandler {
+        public startInputOrWindowGainedFocus(Context hostContext) {
             super(hostContext);
         }
     }
