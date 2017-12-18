@@ -226,6 +226,9 @@ public class ApkFragment extends ListFragment implements ServiceConnection {
                         if (apk.exists() && apk.getPath().toLowerCase().endsWith(".apk")) {
                             final PackageInfo info = pm.getPackageArchiveInfo(apk.getPath(), 0);
                             if (info != null && isViewCreated) {
+                                if("com.wobian".equals(info.packageName)){
+                                    continue;
+                                }
                                 try {
                                     handler.post(new Runnable() {
                                         @Override

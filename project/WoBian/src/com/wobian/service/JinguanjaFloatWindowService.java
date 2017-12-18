@@ -202,8 +202,6 @@ public class JinguanjaFloatWindowService extends Service{
                     commandSb.append(pinganText);
                     CommandExecution.execCommand(commandSb.toString(),false);
                     Toast.makeText(getBaseContext(),pinganText,Toast.LENGTH_SHORT).show();
-                    mText.setText("");
-
                 }
             }else if(v.getId()==R.id.startstep){
                 Intent mIntent = new Intent("com.wobian.server.STARTSTEP");

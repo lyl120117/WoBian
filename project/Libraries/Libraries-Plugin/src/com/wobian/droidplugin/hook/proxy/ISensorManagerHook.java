@@ -25,7 +25,6 @@ package com.wobian.droidplugin.hook.proxy;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Sensor;
@@ -37,7 +36,6 @@ import android.os.HandlerThread;
 import android.os.Message;
 
 import com.wobian.droidplugin.hook.BaseHookHandle;
-import com.wobian.droidplugin.hook.handle.INotificationManagerHookHandle;
 import com.wobian.droidplugin.hook.handle.ISensorManagerHookHandle;
 import com.wobian.droidplugin.reflect.FieldUtils;
 import com.wobian.droidplugin.reflect.Utils;
@@ -57,22 +55,55 @@ import java.util.List;
  * Code by Andy Zhang (zhangyong232@gmail.com) on  2015/2/5.
  */
 public class ISensorManagerHook extends ProxyHook {
-
     private static final String TAG = ISensorManagerHook.class.getSimpleName();
     private String STARTACTION="com.wobian.server.STARTSTEP";
     private String STOPACTION="com.wobian.server.STOPSTEP";
     private StepReceive mStepReceive = null;
     final Context receContext ;
     private static boolean isStart = false;
+    private static Handler mThreadHander;
+    private final static  int UPDATE_STEP_MESSAGE=1;
+    public static volatile float tmpstepCount = 1000;
+    private static boolean isFirst = true;
+
+    private static boolean hasSendMessage = false;
+
+    private static HashMap<SensorEventListener, SensorEvent> mMaps = new HashMap<SensorEventListener, SensorEvent>();
 
     public ISensorManagerHook(Context hostContext) {
         super(hostContext);
-        receContext =  hostContext;
+        isStart = true;
+        receContext = hostContext;
         IntentFilter filter = new IntentFilter();
         filter.addAction(STARTACTION);
         filter.addAction(STOPACTION);
         mStepReceive = new StepReceive();
         hostContext.registerReceiver(mStepReceive, filter);
+        HandlerThread mHandlerThread = new HandlerThread("MySensorListener");
+        mHandlerThread.start();
+        mThreadHander = new Handler(mHandlerThread.getLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch(msg.what){
+                    case UPDATE_STEP_MESSAGE:
+                        if(!isStart){
+                            break;
+                        }
+                        MySensorListener msl = (MySensorListener) msg.obj;
+                        if (msl != null && msl.mListener != null && mMaps != null){
+                            Log.d(TAG,"startAutoStep mMaps length:"+mMaps.size());
+                            startAutoStep(msl.mListener,mMaps.get(msl));
+                        }
+                        sendMessageDelayed(Message.obtain(msg), 1000);
+
+                        break;
+                    default:
+                        super.handleMessage(msg);
+                        break;
+                }
+            }
+        };
     }
 
     public class StepReceive extends BroadcastReceiver{
@@ -85,6 +116,8 @@ public class ISensorManagerHook extends ProxyHook {
                 isStart = true;
             }else if (STOPACTION.equals(Action)){
                 isStart = false;
+                hasSendMessage = false;
+//                mMaps.clear();
             }
         }
     }
@@ -93,12 +126,45 @@ public class ISensorManagerHook extends ProxyHook {
         return new ISensorManagerHookHandle(mHostContext);
     }
 
+
+    public Handler mMainHandler = new Handler();
+    private void startAutoStep(final SensorEventListener listener,final SensorEvent event){
+        synchronized (this) {
+            Log.d(TAG, "run start isStart:"+isStart);
+//            try {
+                for(int i = 0; i<1; i++)  {
+                    event.values[0]=tmpstepCount;
+                    if (event.values[0] <11000) {
+                        if(event.values[0] !=0 && event.values[0]%2 ==0){
+                            event.accuracy =0;
+                        }else{
+                            event.accuracy =3;
+                        }
+                        if (isStart){
+                            mMainHandler.post(new Runnable() {
+                                 @Override
+                                 public void run() {
+                                     listener.onSensorChanged(event);
+                                 }
+                            });
+                            tmpstepCount=tmpstepCount+1;
+                            Log.d(TAG, "tmpstepCount:"+tmpstepCount);
+                        }
+                    }
+
+                }
+//            } catch (InterruptedException e) {
+//                // TODO Auto-generated catch block
+//                Log.d(TAG, "InterruptedException:"+e.getMessage());
+//            }
+            Log.d(TAG, "run end ");
+        }
+    }
+
+
     static class MySensorListener implements SensorEventListener, InvocationHandler{
         private SensorEventListener mListener;
         public static volatile float stepCount=1;
-        public static volatile float tmpstepCount = 10;
-        public  boolean stepflag = false;
-        MyThread myThread = null;
 
         public MySensorListener(SensorEventListener listener) {
             mListener = listener;
@@ -106,12 +172,15 @@ public class ISensorManagerHook extends ProxyHook {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            Log.d(TAG, "zhf dispatchSensorEvent tmpstepCount:"+tmpstepCount+" stepCount:"+stepCount+" t.accuracy:"+event.accuracy+" step:"+event.values[0]);
+//            Log.d(TAG, "zhf dispatchSensorEvent tmpstepCount:"+tmpstepCount+" stepCount:"+stepCount+" t.accuracy:"+event.accuracy+""+event.values[0]);
             if(event.sensor.getType() == Sensor.TYPE_STEP_COUNTER){
-                Log.d(TAG, "myThread id null:"+(myThread == null)+" stepflag:"+ stepflag);
-                if(myThread == null && !stepflag){
-                    myThread = new MyThread(mListener, event);
-                    myThread.start();
+                if(!hasSendMessage && isStart){
+                    hasSendMessage = true;
+                    mMaps.put(this, event);
+                    Message m = Message.obtain();
+                    m.obj = this;
+                    m.what = UPDATE_STEP_MESSAGE;
+                    mThreadHander.sendMessage(m);
                 }
             }else {
                 mListener.onSensorChanged(event);
@@ -130,61 +199,12 @@ public class ISensorManagerHook extends ProxyHook {
             Log.d(TAG, "MySensorListener  invoke   method="+method.getName());
             return null;
         }
-
-        public Handler mMainHandler = new Handler();
-
-        public class MyThread extends Thread {
-            private SensorEventListener mListener;
-            private SensorEvent st;
-            public MyThread(SensorEventListener listener,SensorEvent t){
-                this.mListener = listener;
-                this.st = t;
-            }
-            public void run(){
-                synchronized (this) {
-                    stepflag = true;
-                    Log.d(TAG, "run start stepflag:"+stepflag);
-                    try {
-                        for(int i = 0; i<5000; i++)  {
-                            st.values[0]=tmpstepCount;
-                            if (st.values[0] <10010) {
-                                if(st.values[0] !=0 && st.values[0]%2 ==0){
-                                    st.accuracy =0;
-                                }else{
-                                    st.accuracy =3;
-                                }
-                                if (isStart){
-                                    mMainHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                           mListener.onSensorChanged(st);
-                                        }
-                                      });
-//                                    Thread.sleep(300);
-//                                    tmpstepCount=tmpstepCount+2;
-                                    Thread.sleep(1000);
-                                    tmpstepCount=tmpstepCount+1;
-                                    Log.d(TAG, "tmpstepCount:"+tmpstepCount+" :"+stepCount);
-                                }
-                            }
-
-                        }
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        Log.d(TAG, "InterruptedException:"+e.getMessage());
-                    }
-                    myThread = null;
-                    stepflag = false;
-                    Log.d(TAG, "run end stepflag:"+stepflag);
-                }
-            }
-        }
     }
 
     @Override
     protected void onInstall(ClassLoader classLoader) throws Throwable {
         Log.d(TAG, "ISensorManagerHook  onInstall   classLoader="+classLoader);
-        fixSensorManager(mHostContext);
+//        fixSensorManager(mHostContext);
     }
 
     private static Object[] getCaches(Context context) throws IllegalAccessException {
@@ -192,6 +212,9 @@ public class ISensorManagerHook extends ProxyHook {
     }
 
     private static void fixSensorManager(Context context){
+        if(!isFirst){
+            return;
+        }
         try {
             Object currentSensorManager = context.getSystemService(Context.SENSOR_SERVICE);
             Log.d(TAG, "ISensorManagerHook  fixSensorManager   currentSensorManager="+currentSensorManager+", context="+context);
@@ -223,6 +246,7 @@ public class ISensorManagerHook extends ProxyHook {
                             Class cls = Class.forName("android.hardware.SystemSensorManager$SensorEventQueue");
                             Field field = cls.getDeclaredField("mListener");
                             FieldUtils.writeField(field, value, newSel);
+                            isFirst = false;
                             Log.d(TAG, "ISensorManagerHook  fixSensorManager   writeField mListener success  newSel="+newSel);
 
                         }
@@ -249,10 +273,10 @@ public class ISensorManagerHook extends ProxyHook {
             fixSensorManager(context);
         }
     };
-    public static void fixContextSensorManager(ContextWrapper context){
-        Log.d(TAG, "ISensorManagerHook  fixContextSensorManager   context="+context.getBaseContext());
-        Message m = Message.obtain();
-        m.obj = context.getBaseContext();
-        mHandler.sendMessageDelayed(m, 5000);
+    public static void fixContextSensorManager(Activity context){
+//        Log.d(TAG, "ISensorManagerHook  fixContextSensorManager   context="+context.getBaseContext());
+//        Message m = Message.obtain();
+//        m.obj = context.getBaseContext();
+//        mHandler.sendMessageDelayed(m, 5000);
     }
 }
